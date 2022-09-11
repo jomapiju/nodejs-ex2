@@ -65,6 +65,17 @@ apiRouter.get(endpoint + 'produtos', /*checkToken,*/ (req, res) => {
     })
 })
 
+apiRouter.get(endpoint + 'produto/:id', /*checkToken,*/ (req, res) => {
+    const {id} = req.params
+
+    knex.where({id:id}).select('*').from('produto')
+    .then(produto => res.status(200).json(produto))
+    .catch(err => {
+        res.status(500).json({
+            message: 'Erro ao recuperar produtos - ' + err.message })
+    })
+})
+
 apiRouter.post(endpoint + 'produto', /*checkToken, isAdmin,*/ (req, res) => {
     const { descricao, valor, marca } = req.body
     knex.insert({descricao,valor,marca}).table('produto').then(produto => {
