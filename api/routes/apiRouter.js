@@ -56,7 +56,7 @@ let isAdmin = (req, res, next) => {
         })
 }
 
-apiRouter.get(endpoint + 'produtos', checkToken, (req, res) => {
+apiRouter.get(endpoint + 'produtos', /*checkToken,*/ (req, res) => {
     knex.select('*').from('produto')
     .then(produtos => res.status(200).json(produtos))
     .catch(err => {
@@ -65,7 +65,7 @@ apiRouter.get(endpoint + 'produtos', checkToken, (req, res) => {
     })
 })
 
-apiRouter.post(endpoint + 'produto', checkToken, isAdmin, (req, res) => {
+apiRouter.post(endpoint + 'produto', /*checkToken, isAdmin,*/ (req, res) => {
     const { descricao, valor, marca } = req.body
     knex.insert({descricao,valor,marca}).table('produto').then(produto => {
         res.sendStatus(201)
@@ -77,7 +77,7 @@ apiRouter.post(endpoint + 'produto', checkToken, isAdmin, (req, res) => {
     })
 })
 
-apiRouter.delete(endpoint+'produto/:id', checkToken, isAdmin, (req, res) => {
+apiRouter.delete(endpoint+'produto/:id', /*checkToken, isAdmin,*/ (req, res) => {
     const {id} = req.params
 
     knex.where({id: id}).del().table('produto').then(() => {
@@ -89,7 +89,7 @@ apiRouter.delete(endpoint+'produto/:id', checkToken, isAdmin, (req, res) => {
     })
 })
 
-apiRouter.put(endpoint+'produto/:id', checkToken, isAdmin, (req, res) => {
+apiRouter.put(endpoint+'produto/:id', /*checkToken, isAdmin,*/ (req, res) => {
     const { id } = req.params
     const { descricao, valor, marca } = req.body
     knex.where({id:id}).update({descricao,valor,marca}).table('produto').then(produto => {
